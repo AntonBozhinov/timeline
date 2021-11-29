@@ -2,7 +2,7 @@ version: "3.1"
 
 services:
   database:
-    image: postgres:12
+    image: postgres:13
     container_name: fusionadapter-postgres
     ports:
       - "5432:5432"
