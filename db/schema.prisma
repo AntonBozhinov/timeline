@@ -84,6 +84,7 @@ model Timeline {
 
 model TimelineEntry {
   id         Int      @id @default(autoincrement())
+  details    String
   timeline   Timeline @relation(fields: [timelineId], references: [id])
   timelineId Int
   createdAt  DateTime @default(now())
