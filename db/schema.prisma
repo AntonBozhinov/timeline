@@ -23,9 +23,8 @@ model User {
 
   tokens         Token[]
   sessions       Session[]
-  timelines      Timeline[]
-  TimelineAccess TimelineAccess[]
-
+  children       Child[]
+  childrenAccess ChildAccess[]
   @@map("users")
 }
 
@@ -71,13 +70,75 @@ enum TokenType {
   RESET_PASSWORD
 }
 
+model Child {
+  id        Int      @id @default(autoincrement())
+  name      String
+  birthDate DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    Int?
+
+  timeline Timeline?
+  user     User?         @relation(fields: [userId], references: [id])
+  weights  ChildWeight[]
+  heigts   ChildHeight[]
+
+  ChildAccess ChildAccess[]
+  @@map("children")
+}
+
+model ChildWeight {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  weight    Float
+  childId   Int?
+
+  child Child? @relation(fields: [childId], references: [id])
+  @@map("child_weights")
+}
+
+model ChildHeight {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  height    Float
+  childId   Int?
+  child     Child?   @relation(fields: [childId], references: [id])
+
+  @@map("child_heights")
+}
+
+model ChildAccess {
+  id             Int            @id @default(autoincrement())
+  user           User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId         Int
+  child          Child          @relation(fields: [childId], references: [id], onDelete: Cascade)
+  childId        Int
+  parentalStatus ParentalStatus
+  access         AccessType
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  @@index([childId, userId], name: "child_access_child_user_idx")
+  @@map("child_access")
+}
+
+enum AccessType {
+  READ
+  WRITE
+}
+
+enum ParentalStatus {
+  FATHER
+  MOTHER
+  OTHER
+}
+
 model Timeline {
-  id             Int              @id @default(autoincrement())
-  name           String
-  owner          User             @relation(fields: [ownerId], references: [id], onDelete: Cascade)
-  ownerId        Int
-  LogEntry       TimelineEntry[]
-  TimelineAccess TimelineAccess[]
+  id      Int             @id @default(autoincrement())
+  name    String
+  child   Child           @relation(fields: [childId], references: [id], onDelete: Cascade)
+  childId Int             @unique
+  entry   TimelineEntry[]
 
   @@map("timelines")
 }
@@ -91,23 +152,4 @@ model TimelineEntry {
   updatedAt  DateTime @updatedAt
 
   @@map("timeline_entries")
-}
-
-model TimelineAccess {
-  id         Int        @id @default(autoincrement())
-  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId     Int
-  timeline   Timeline   @relation(fields: [timelineId], references: [id], onDelete: Cascade)
-  timelineId Int
-  access     AccessType
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
-
-  @@index([timelineId, userId], name: "timeline_access_timeline_user_idx")
-  @@map("timeline_access")
-}
-
-enum AccessType {
-  READ
-  WRITE
 }

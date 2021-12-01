@@ -7,6 +7,7 @@ export { FORM_ERROR } from "final-form"
 export interface FormProps<S extends z.ZodType<any, any>>
   extends Omit<PropsWithoutRef<JSX.IntrinsicElements["form"]>, "onSubmit"> {
   /** All your form fields */
+  submitButtonClassName?: string
   children?: ReactNode
   /** Text to display in the submit button */
   submitText?: string
@@ -21,6 +22,7 @@ export function Form<S extends z.ZodType<any, any>>({
   schema,
   initialValues,
   onSubmit,
+  submitButtonClassName,
   ...props
 }: FormProps<S>) {
   return (
@@ -37,7 +39,7 @@ export function Form<S extends z.ZodType<any, any>>({
 
           {submitText && (
             <button
-              className="w-full p-2 rounded-lg bg-blue-500 text-white"
+              className={`w-full p-2 rounded-lg ${submitButtonClassName}`}
               type="submit"
               disabled={submitting}
             >

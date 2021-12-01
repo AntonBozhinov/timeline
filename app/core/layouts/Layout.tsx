@@ -1,19 +1,15 @@
-import { Head, BlitzLayout, Routes } from "blitz"
-import { Suspense } from "react"
-import { SideNav } from "../components/SideNav"
+import { Head, BlitzLayout } from "blitz"
+import { Header } from "../components/Header"
 
 const Layout: BlitzLayout<{ title?: string }> = ({ title, children }) => {
   return (
-    <div id="outer-container">
+    <div>
       <Head>
-        <title>{title || "timeline"}</title>
+        <title>{title || "Baby Diary"}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <SideNav />
-      <main id="page-wrap" className="bg-gray-100 min-h-screen">
-        <h1 className="text-center py-3 text-xl font-bold">{title}</h1>
-        {children}
-      </main>
+      <Header title={title} />
+      <main>{children}</main>
     </div>
   )
 }

@@ -4,12 +4,12 @@ import Layout from "app/core/layouts/Layout"
 const Home: BlitzPage = () => {
   return (
     <div className="h-full">
-      <div className="text-cente">home</div>
+      <div className="text-center"></div>
     </div>
   )
 }
 
 Home.suppressFirstRenderFlicker = true
-Home.getLayout = (page) => <Layout title="Timelines">{page}</Layout>
+Home.getLayout = (page) => <Layout title="Babies">{page}</Layout>
 
 export default Home

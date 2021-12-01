@@ -28,11 +28,13 @@
     "autoprefixer": "10.x",
     "blitz": "0.43.0",
     "final-form": "4.20.4",
+    "framer-motion": "5.3.3",
     "postcss": "8.x",
     "react": "18.0.0-alpha-5ca4b0433-20211020",
     "react-burger-menu": "3.0.6",
     "react-dom": "18.0.0-alpha-5ca4b0433-20211020",
     "react-final-form": "6.5.7",
+    "react-icons": "4.3.1",
     "sharp": "0.29.3",
     "tailwindcss": "2.x",
     "zod": "3.11.6"

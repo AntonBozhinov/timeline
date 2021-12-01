@@ -1,6 +1,6 @@
-import { useRouter, BlitzPage } from "blitz"
-import Layout from "app/core/layouts/Layout"
+import { useRouter, BlitzPage, Image } from "blitz"
 import { LoginForm } from "app/auth/components/LoginForm"
+import { AnimateSharedLayout } from "framer-motion"
 
 const LoginPage: BlitzPage = () => {
   const router = useRouter()
@@ -17,7 +17,7 @@ const LoginPage: BlitzPage = () => {
   )
 }
 
+LoginPage.suppressFirstRenderFlicker = true
 LoginPage.redirectAuthenticatedTo = "/"
-// LoginPage.getLayout = (page) => <Layout title="Log In">{page}</Layout>
-
+LoginPage.getLayout = (page) => <AnimateSharedLayout>{page}</AnimateSharedLayout>
 export default LoginPage

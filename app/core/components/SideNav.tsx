@@ -3,6 +3,8 @@ import { Suspense } from "react"
 import { reveal as Menu } from "react-burger-menu"
 import logout from "../../auth/mutations/logout"
 import { useCurrentUser } from "../hooks/useCurrentUser"
+import { FaBars } from "react-icons/fa"
+import { motion } from "framer-motion"
 
 const UserInfo = () => {
   const currentUser = useCurrentUser()
@@ -17,6 +19,31 @@ const UserInfo = () => {
       </div>
       <h1 className="text-base text-center mt-4">{currentUser?.email}</h1>
     </div>
+  )
+}
+
+const toggleVariants = {
+  initial: {
+    x: "1000%",
+  },
+  animate: {
+    x: 0,
+  },
+}
+
+interface SideNavToggleProps {
+  onClick?: () => void
+}
+
+export const SideNavToggle = ({ onClick = () => {} }: SideNavToggleProps) => {
+  return (
+    <motion.div
+      variants={toggleVariants}
+      onClick={onClick}
+      className="absolute z-50 right-2 top-2 w-16 h-16 m-auto rounded-full flex justify-center items-center text-center bg-pink-500 text-white"
+    >
+      <FaBars className="text-2xl" />
+    </motion.div>
   )
 }
 
